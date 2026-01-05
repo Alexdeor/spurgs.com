@@ -20,7 +20,7 @@ export default function Header() {
         </div>
       ) : (
         <>        
-        <Link href="/pages/login"><span className="text-sm text-gray-500">Login</span></Link>
+        <Link href="/login"><span className="text-sm text-gray-500">Login</span></Link>
         <span className="text-sm text-gray-500">Not logged in</span>
         </>
 

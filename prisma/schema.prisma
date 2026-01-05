@@ -7,16 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model video {
+model Video {
   id        Int   @id @default(autoincrement())
   title     String
   filename  String
   thumbnail String?
   userEmail String
   createdAt DateTime @default(now())
-}
+  }
 
-model user {
+model User {
   id        Int @id @default(autoincrement())
   username  String @unique
   email     String @unique
