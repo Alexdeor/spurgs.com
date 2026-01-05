@@ -9,7 +9,7 @@ export default function UploadPage() {
   const router = useRouter()
   const [title, setTitle] = useState('')
   const [file, setFile] = useState<File | null>(null)
-
+  const [thumbnail, setThumbnail] = useState<File | null>(null)
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/login')
@@ -19,9 +19,25 @@ export default function UploadPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!file || !title) return alert('Please provide a title and video.')
-
-    console.log('Uploading:', { title, file, user: session?.user?.email })
-    alert('Mock upload complete')
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('file', file); 
+     if (thumbnail) {
+    formData.append('thumbnail', thumbnail);
+  }
+    try{
+      const res = await fetch('/api/upload',{
+        method: 'POST', 
+        body: formData,
+      }); 
+      const data = await res.json();
+      if(!res.ok) throw new Error(data.error || 'Upload failed');
+        alert('Upload successful!');
+  console.log('Server response:', data);
+} catch (err) {
+  console.error('Upload error:', err);
+  alert('Upload failed.');
+    }
   }
 
   if (status === 'loading') {
@@ -37,14 +53,25 @@ export default function UploadPage() {
           placeholder="Video title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full border rounded p-2"
+          className="w-full text-black border rounded p-10"
         />
+        <label htmlFor='video'> Upload your Video
         <input
           type="file"
           accept="video/mp4"
           onChange={(e) => setFile(e.target.files?.[0] || null)}
           className="w-full"
         />
+        </label>
+        <label htmlFor="thubmnail">
+          Upload your Thumbnail
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setThumbnail(e.target.files?.[0] || null)}
+          className="w-full"
+        />
+   </label>
         <button
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
