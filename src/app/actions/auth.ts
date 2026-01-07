@@ -3,9 +3,11 @@
 import { SignupFormSchema, FormState } from '@/app/lib/definitions'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma';
+import { createSession } from '@/app/lib/session'
+import { redirect } from 'next/navigation'
 
 export async function signup(state: FormState, formData: FormData) {
-  // Validate form fields
+  //1. Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     username: formData.get('username'),
     email: formData.get('email'),
@@ -18,12 +20,14 @@ export async function signup(state: FormState, formData: FormData) {
       errors: validatedFields.error.flatten().fieldErrors,
     }
   }
+    // 2. Prepare data for insertion into database
    const { username, email, password } = validatedFields.data
     // e.g. Hash the user's password before storing it
   const hashedPassword = await bcrypt.hash(password, 10)
-
+  // 3. Insert the user into the database or call an Library API
+  let user
 try {
-  const user = await prisma.user.create({
+   user = await prisma.user.create({
     data: { username, email, password: hashedPassword },
     select: { id: true },
   })
@@ -33,4 +37,11 @@ try {
   return { message: 'Server error' }
 }
   return { message: 'Account created successfully' }
+
+  // 4. Create user session
+  await createSession(user.id)
+  // 5. Redirect user
+  redirect('/')
+
+
 }
