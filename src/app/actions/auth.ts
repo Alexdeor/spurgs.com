@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma';
 import { createSession } from '@/app/lib/session'
 import { redirect } from 'next/navigation'
+import { deleteSession } from '@/app/lib/session'
 
 export async function signup(state: FormState, formData: FormData) {
   //1. Validate form fields
@@ -36,12 +37,16 @@ try {
   if (e.code === 'P2002') return { errors: { email: ['Email already in use'] } }
   return { message: 'Server error' }
 }
-  return { message: 'Account created successfully' }
 
-  // 4. Create user session
-  await createSession(user.id)
-  // 5. Redirect user
-  redirect('/')
+// 4. Create user session
+await createSession(user.id)
+// 5. Redirect user
+redirect('/')
+return { message: 'Account created successfully' }
 
 
+}
+export async function logout() {
+  await deleteSession()
+  redirect('/login')
 }
