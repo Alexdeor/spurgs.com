@@ -15,7 +15,6 @@ export default function LoginPage() {
       password,
       callbackUrl: '/',
     })
-    console.log('Login result:', res)
   }
 
   return (
