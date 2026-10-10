@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma';
 
 export async function signup(state: FormState, formData: FormData) {
+    let user // Variable for the DB
   //1. Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     username: formData.get('username'),
@@ -23,7 +24,6 @@ export async function signup(state: FormState, formData: FormData) {
     // e.g. Hash the user's password before storing it
   const hashedPassword = await bcrypt.hash(password, 10)
   // 3. Insert the user into the database or call an Library API
-  let user
 try {
    user = await prisma.user.create({
     data: { username, email, password: hashedPassword },

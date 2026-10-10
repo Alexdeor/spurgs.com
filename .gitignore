@@ -41,3 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+# Uploaded videos and thumbnails
+/public/videos/
+/public/thumbnail/
+/public/thumbnails/

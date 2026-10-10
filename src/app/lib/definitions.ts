@@ -17,6 +17,11 @@ export const SignupFormSchema = z.object({
     .trim(),
 })
  
+// export type userSchema = {
+
+// };
+
+
 export type FormState =
   | {
       errors?: {

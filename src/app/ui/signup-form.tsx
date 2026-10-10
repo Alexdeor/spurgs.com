@@ -6,10 +6,10 @@ import { useActionState, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function SignupForm() {
-  const [state, action, pending] = useActionState(signup, undefined)
+const [state, action, pending] = useActionState(signup, undefined)
 const [email, setEmail] = useState('')
 const [password, setPassword] = useState('')
-  const router = useRouter()
+const router = useRouter()
 
   useEffect(() => {
     if (state?.success && email !== '') {

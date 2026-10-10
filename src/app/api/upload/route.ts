@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
 import path from 'path';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '../auth/[...nextauth]/route';
+import {authOptions} from '@/app/lib/auth';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -46,13 +46,12 @@ export async function POST(req: Request) {
 }
 
 
-  // Save video info to DB
   const video = await prisma.video.create({
     data: {
-      title,
-      filename,
+      userId: parseInt(session.user.id),
+      title: title,
+      filename: filename,
       thumbnail: thumbnail ? thumbnailName : null,
-      userEmail: session.user?.email!,
     },
   });
 
