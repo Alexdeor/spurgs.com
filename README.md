@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Spurgs Video — Full-Stack Video Streaming Platform
+A full-stack video streaming web application built with Next.js, React, TypeScript, Prisma, and MySQL.
+Spurgs Video allows users to create accounts, authenticate securely, upload videos with custom thumbnails, browse uploaded content, and stream videos directly through their browsers.
+Features
+- User Authentication: Account registration and login using NextAuth.js, JWT sessions, and bcrypt password hashing.
+- Video Uploads: Authenticated users can upload video files with custom thumbnails.
+- Video Streaming: Users can watch uploaded videos through an HTML5 video player.
+- Video Library: Browse uploaded videos in a responsive grid layout.
+- Database Integration: Store user information and video metadata in MySQL using Prisma ORM.
+- Dynamic Routing: Individual video pages generated using Next.js App Router.
+Tech Stack
+Category	Technologies
+Frontend	Next.js, React, TypeScript
+Styling	Tailwind CSS
+Backend	Next.js API Routes, Node.js
+Database	MySQL
+ORM	Prisma
+Authentication	NextAuth.js, bcrypt.js, JWT
 
-## Getting Started
 
-First, run the development server:
+Application Screenshots
+Homepage
+Browse uploaded videos through a responsive grid displaying video thumbnails and titles.
+![Homepage](screenshots/homepage.png)
 
-```bash
+Video Playback
+Select a video to open its dedicated playback page.
+![Homepage](screenshots/video-player.png)
+
+Video Upload
+Authenticated users can upload videos and custom thumbnails.
+![Homepage](screenshots/upload.png)
+
+Authentication
+Users can register and log in to their accounts.
+![Homepage](screenshots/login.png)
+
+Database Integration
+Prisma ORM connects the application to a MySQL database containing user accounts and video metadata.
+![Homepage](screenshots/database_video_data.png)
+![Homepage](screenshots/database_user_data.png)
+
+
+Database Architecture
+The application uses three primary database models:
+User
+- Stores account information.
+- Maintains relationships with uploaded videos.
+- Stores bcrypt-hashed passwords.
+Video
+- Stores video titles, filenames, thumbnails, and upload timestamps.
+- Associates uploaded videos with their owners through a foreign key.
+Session
+- Stores session-related records associated with users.
+Getting Started
+Prerequisites
+- Node.js
+- MySQL
+- npm
+Installation
+1. Clone the repository
+git clone https://github.com/Alexdeor/spurgs.com.git
+cd spurgs.com
+
+2. Install dependencies
+npm install
+
+3. Configure environment variables
+Create a .env file containing the required database connection string and authentication configuration.
+DATABASE_URL="mysql://USER:PASSWORD@localhost:3306/DATABASE_NAME"
+
+Additional authentication environment variables may be required depending on your NextAuth.js configuration.
+4. Set up the database
+npx prisma migrate deploy
+npx prisma generate
+
+5. Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open the application at http://localhost:3000.
+Future Improvements
+Potential enhancements include:
+- Video search and filtering.
+- User profiles displaying uploaded videos.
+- Video descriptions and categories.
+- Cloud-based video storage.
+- Improved mobile responsiveness.
+Author
+Developed by Alex De Orbegoso.

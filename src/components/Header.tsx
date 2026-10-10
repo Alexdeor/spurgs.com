@@ -13,9 +13,11 @@ export default function Header() {
       <h1  className="text-xl font-bold text-blue-600"><Link href="/">Spurgs Video</Link></h1>
       {status === 'authenticated' ? (
         <>
-        <Link href={"/upload"}><button className="bg-gray-600 text-white px-3 m-1 p-1 rounded hover:bg-gray-700">Upload</button></Link>
         <div className="flex items-center gap-4">
+
          <Link href={'/profile'}> <span className="text-gray-700 hover:bg-gray-700">Hi, {session.user?.name}</span></Link>
+                           <Link href={"/upload"}><button className="bg-gray-600 text-white px-3 m-1 p-1 rounded hover:bg-gray-700">Upload</button></Link>
+
           <button
             onClick={() => signOut({ callbackUrl: '/login' })}
             className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
